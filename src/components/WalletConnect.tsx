@@ -44,7 +44,7 @@ const WalletConnect = ({ onConnect, isConnected, walletAddress }: WalletConnectP
           description: isSignup ? "Your account has been created. You are now logged in." : "You have successfully logged in.",
           dismissible: true,
         });
-        navigate("/");
+        window.location.reload();
       } else {
         throw new Error("No token returned");
       }
@@ -136,22 +136,22 @@ const WalletConnect = ({ onConnect, isConnected, walletAddress }: WalletConnectP
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
               {isSignup
-                ? "Sign up with your wallet address to join the royal battle."
-                : "Login with your wallet address to continue."}
+                ? "Sign up with your wallet address, email, and password to join the royal battle."
+                : "Login with your email and password to continue."}
             </p>
           </div>
           <div className="space-y-4">
-            <input
-              type="text"
-              required
-              placeholder="Wallet Address"
-              className="w-full px-4 py-3 rounded-lg border border-primary/30 bg-background text-primary focus:outline-none focus:ring-2 focus:ring-primary"
-              value={wallet}
-              onChange={e => setWallet(e.target.value)}
-              autoComplete="username"
-            />
             {isSignup && (
               <>
+                <input
+                  type="text"
+                  required
+                  placeholder="Wallet Address"
+                  className="w-full px-4 py-3 rounded-lg border border-primary/30 bg-background text-primary focus:outline-none focus:ring-2 focus:ring-primary"
+                  value={wallet}
+                  onChange={e => setWallet(e.target.value)}
+                  autoComplete="username"
+                />
                 <input
                   type="text"
                   required
@@ -161,6 +161,19 @@ const WalletConnect = ({ onConnect, isConnected, walletAddress }: WalletConnectP
                   onChange={e => setName(e.target.value)}
                   autoComplete="name"
                 />
+                <input
+                  type="email"
+                  required
+                  placeholder="Email"
+                  className="w-full px-4 py-3 rounded-lg border border-primary/30 bg-background text-primary focus:outline-none focus:ring-2 focus:ring-primary"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  autoComplete="email"
+                />
+              </>
+            )}
+            {!isSignup && (
+              <>
                 <input
                   type="email"
                   required

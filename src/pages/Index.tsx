@@ -4,7 +4,14 @@ import WalletConnect from "@/components/WalletConnect";
 import Dashboard from "@/components/Dashboard";
 import NFTCollection from "@/components/NFTCollection";
 import GameLobby from "@/components/GameLobby";
-import { Crown, Gamepad2, Shield, Trophy } from "lucide-react";
+import { Crown, Gamepad2, Shield, Trophy, User, LogOut } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator
+} from "@/components/ui/dropdown-menu";
 
 const Index = () => {
   const [walletAddress, setWalletAddress] = useState<string>("");
@@ -86,9 +93,31 @@ const Index = () => {
                 {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
               </p>
             </div>
-            <div className="text-center">
-              <div className="w-3 h-3 bg-green-500 rounded-full animate-glow-pulse mb-1" />
-              <span className="text-xs text-muted-foreground">Online</span>
+            <div className="flex items-center gap-2 relative">
+              <button className="relative w-9 h-9 rounded-full border border-primary/30 bg-background shadow-md flex items-center justify-center hover:bg-primary/10 transition-all focus:outline-none">
+                <img src="/logo.png" alt="Avatar" className="w-7 h-7 rounded-full object-cover" />
+                <span className="absolute bottom-1 right-1 w-2.5 h-2.5 bg-green-500 border-2 border-background rounded-full shadow-lg" />
+              </button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="px-2 py-1 rounded-full border border-primary/30 bg-background hover:bg-primary/10 transition-all text-primary text-xs font-semibold focus:outline-none shadow-sm flex items-center gap-1">
+                    <User className="w-4 h-4" />
+                    <span>Account</span>
+                    <svg className="w-3 h-3 ml-1" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => {/* TODO: navigate to profile page */}} className="flex items-center gap-2">
+                    <User className="w-4 h-4" />
+                    Profile
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => { localStorage.removeItem('token'); window.location.reload(); }} className="flex items-center gap-2 text-destructive">
+                    <LogOut className="w-4 h-4" />
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>
